@@ -1,34 +1,36 @@
 puts "Welcome, how could I be of service?"
 
-balance = 0
+balance = File.open("balance.txt", "r") { |file| file.read }.to_i
+
 input = 0
 history = []
-while input != "exit" do
-    input = gets.chomp
-case input 
-when "balance"
+while input != "exit"
+  input = gets.chomp
+  case input
+  when "balance"
     puts "Your balance is #{balance}\n What would you like to do?"
-when "deposit"
+  when "deposit"
     puts "How much would you like to deposit?"
-    deposit = gets.chomp.to_i 
+    deposit = gets.chomp.to_i
     balance = balance + deposit
     puts "Your balance is #{balance}\nHow else could we help you today?"
     history.push("Deposit: #{deposit}")
-when "withdraw"
+  when "withdraw"
     puts "How much would you like to withdraw?"
     withdraw = gets.chomp.to_i
     if withdraw > balance
-        puts "Insufficient funds"
+      puts "Insufficient funds"
     else
-    balance = balance - withdraw
+      balance = balance - withdraw
     end
     puts "Your balance is #{balance}\nHow else could we help you today?"
     history.push("Withdrawal: #{withdraw}")
-when "exit"
+  when "exit"
     break
-when "history"
+  when "history"
     puts history
-else
+  else
     puts "I did not recognize the command, try again"
+  end
 end
-end
+File.open("balance.txt", "w"){|file| file.puts balance}
