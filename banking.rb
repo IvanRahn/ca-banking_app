@@ -1,9 +1,12 @@
+# Great customer
 puts "Welcome, how could I be of service?"
 
+# Read balance.txt
 balance = File.open("balance.txt", "r") { |file| file.read }.to_i
-
 input = 0
 history = []
+
+#read user input to access deposit/withdraw/balance/history until user types exit
 while input != "exit"
   input = gets.chomp
   case input
@@ -33,4 +36,6 @@ while input != "exit"
     puts "I did not recognize the command, try again"
   end
 end
-File.open("balance.txt", "w"){|file| file.puts balance}
+
+#write balance to balance.txt
+File.open("balance.txt", "w") { |file| file.puts balance }
