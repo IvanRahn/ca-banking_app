@@ -15,6 +15,7 @@ def customer_info(name)
   customer
 end
 
+# save customer hash to file
 def save_hash_to_file(customer_data)
   File.open("#{customer_data["name"]}.txt", "w") { |file| file.write(hash_to_json(customer_data)) }
 end
