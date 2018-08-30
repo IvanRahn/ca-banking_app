@@ -1,4 +1,6 @@
 #check if the file exists
+require "io/console"
+
 def existing_customer?(user_name)
   File.file?("#{user_name}.txt")
 end
@@ -15,7 +17,6 @@ end
 
 # save customer hash to file
 def save_hash_to_file(customer_data)
-  puts customer_data
   File.open("#{customer_data["name"]}.txt", "w") { |file| file.write(hash_to_json(customer_data)) }
 end
 
@@ -30,7 +31,9 @@ end
 
 #this block controls the flow
 def logic(customer)
-  input = gets.chomp.to_i
+  puts "----------------------------------------------"
+  input = STDIN.noecho(&:gets).chomp.to_i
+
   case input
   when 1
     balance(customer)
@@ -46,7 +49,9 @@ def logic(customer)
   when 6
     menu
   end
-  puts "How else would we be able to assist you today? Please press 6 if you would like to see the menu again."
+  puts "----------------------------------------------"
+  sleep(1)
+  puts "How else would we be able to assist you today? \nPlease press 6 if you would like to see the menu again."
   logic(customer)
 end
 
@@ -57,7 +62,10 @@ def deposit(customer)
   dep += gets.chomp.to_i
   customer["balance"] += dep
   puts "Processing transaction..."
-  puts "Your balance is #{customer["balance"]}"
+  sleep(1)
+  puts "Updating your balance..."
+  sleep(1)
+  puts "Your balance is $#{customer["balance"]}"
   customer["history"] << "Deposit: $#{dep}"
 end
 
@@ -65,14 +73,22 @@ def withdraw(customer)
   draw = 0
   puts "How much would you like to withdraw?"
   draw = gets.chomp.to_i
-  customer["balance"] -= draw
-  puts "Processing transaction..."
-  puts "Your balance is #{customer["balance"]}"
+  puts "Procesing transaction..."
+  sleep(1)
+  if customer["balance"] < draw
+    puts "Insufficient funds"
+  else
+    customer["balance"] -= draw
+    puts "Updating your balance..."
+    sleep(1)
+    puts "Your balance is $#{customer["balance"]}"
+  end
   customer["history"] << "Withdraw: $#{draw}"
 end
 
 def balance(customer)
-  puts "Your balance is #{customer["balance"]}"
+  sleep(1)
+  puts "Your balance is $#{customer["balance"]}"
 end
 
 def history(customer)
