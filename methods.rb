@@ -33,7 +33,7 @@ end
 def logic(customer)
   puts "----------------------------------------------"
   input = STDIN.noecho(&:gets).chomp.to_i
-
+system 'clear'
   case input
   when 1
     balance(customer)
